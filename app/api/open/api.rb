@@ -15,6 +15,7 @@ module Open
     end
 
     helpers Open::Helpers::CurrentUserHelpers
+    helpers Open::Helpers::SuccessResponseHelpers
     helpers Open::Helpers::ErrorHandlerHelpers
     mount Open::V1::Users::Resources => '/v1/users'
     add_swagger_documentation \

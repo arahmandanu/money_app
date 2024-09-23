@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+require 'bcrypt'
 class Auth < ApplicationRecord
-  before_save :downcase_email
+  include BCrypt
+  before_save :encrypt_pass
 
   belongs_to :auth_able, polymorphic: true, optional: true
   has_many :tokenizers,
@@ -11,7 +13,7 @@ class Auth < ApplicationRecord
 
   private
 
-  def downcase_email
-    email.downcase!
+  def encrypt_pass
+    Password.create(encrypted_password)
   end
 end

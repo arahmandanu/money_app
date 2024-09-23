@@ -5,18 +5,17 @@ module Open
     module Users
       # Resources api for users
       class Resources < Open::V1::AplicationResources
-        desc 'list users all' do
+        desc 'get detail' do
           detail 'Detail path'
           headers AUTHORIZATION_HEADERS
           tags ['paths']
         end
         get '' do
-          byebug
-          interactor = UseCases::Users::UserListAll
-          request_args = interactor.parameters(params)
+          interactor = UseCases::Users::UserDetail
+          request_args = interactor.parameters({ id: @current_user.id })
           Dry::Matcher::ResultMatcher.call(interactor.new(request_args).result) do |matcher|
             matcher.success do |response|
-              present(response:)
+              success_response(response)
             end
             matcher.failure do |errors|
               error_response errors

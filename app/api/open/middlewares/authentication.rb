@@ -7,26 +7,31 @@ class Open::Middlewares::Authentication < Rack::Auth::AbstractHandler
     return custom_error(401, ['Unauthorized']) unless auth.bearer?
 
     # challenge_token
-    # do_validate_token(auth.token) << VALIDATE TOKEN HERE AND GET THE USER DETAIL
-    # # return custom_error(400, ['User not found']) unless user.present?
-    valid?(auth)
-    env['token'] = auth.token
+    status, message, owner = do_validate_token(auth.token)
+    return custom_error(401, [message]) unless status
+
+    valid?(owner)
+    env['owner'] = owner
     status, headers, response = @app.call(env)
     [status, headers, response]
   end
 
   private
 
-  def do_validate_token(token)
-    byebug
+  def do_validate_token(bearer)
+    record_token = Tokenizer.find_by(token: bearer)
+    return [false, 'Unauthorized', nil] if record_token.blank?
+    return [false, 'Token Revoked !'] if record_token.revoked_at.present?
+
+    [true, nil, record_token.auth.auth_able]
   end
 
   def challenge
     'Bearer realm="%s"' % realm
   end
 
-  def valid?(auth)
-    @authenticator.call(auth.token)
+  def valid?(owner)
+    @authenticator.call(owner)
   end
 
   def custom_error(status_code, messages = [], server_response = nil)
