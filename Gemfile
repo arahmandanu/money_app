@@ -94,3 +94,7 @@ gem 'rubocop-performance'
 gem 'dotenv-rails'
 
 gem 'rack-cors'
+gem 'clean-architecture', '~> 5.0.2'
+gem 'dry-rails'
+#  grape hashie formater
+gem 'hashie-forbidden_attributes'
