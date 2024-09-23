@@ -11,7 +11,6 @@ module UseCases
       def result
         valid_params = yield result_of_validating_params
         raise ActiveRecord::RecordNotFound
-        yield data
         Success(Hashie::Mash.new({ status: 'success', data: [] }))
       end
 
