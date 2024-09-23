@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class V1::AplicationResources < Grape::API
+class Open::V1::AplicationResources < Grape::API
   AUTHORIZATION_HEADERS = { Authorization: { description: 'Access Token', required: true } }.freeze
   public_constant :AUTHORIZATION_HEADERS
 

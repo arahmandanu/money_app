@@ -5,6 +5,16 @@ module Open
   class API < Grape::API
     include Open::Errors::ExceptionHandler
 
+    Grape::Middleware::Auth::Strategies.add(:api_auth, Open::Middlewares::Authentication, lambda { |options|
+      [options[:realm]]
+    })
+
+    auth :api_auth, { realm: 'Api authorization' } do |token|
+      set_current_user(token)
+      true
+    end
+
+    helpers Open::Helpers::CurrentUserHelpers
     helpers Open::Helpers::ErrorHandlerHelpers
     mount Open::V1::Users::Resources => '/v1/users'
     add_swagger_documentation \
