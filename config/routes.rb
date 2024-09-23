@@ -13,7 +13,11 @@ Rails.application.routes.draw do
   scope :open do
     mount GrapeSwaggerRails::Engine => '_doc', at: '_doc', as: :open
   end
+  scope :authentication do
+    mount GrapeSwaggerRails::Engine => '_doc', at: '_doc', as: :authentication
+  end
 
   # Grape Api
   mount APIBase => '/api/open'
+  mount APIAuthenticationBase => '/api/authentication'
 end

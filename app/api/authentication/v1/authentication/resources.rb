@@ -1,18 +1,21 @@
 # frozen_string_literal: true
 
-module Open
+module Authentication
   module V1
-    module Users
+    module Authentication
       # Resources api for users
       class Resources < Open::V1::AplicationResources
-        desc 'get detail' do
-          detail 'Detail path'
-          headers AUTHORIZATION_HEADERS
-          tags ['users']
+        desc 'Authentication' do
+          detail 'User Authentication'
+          tags ['authentication']
         end
-        get '' do
-          interactor = UseCases::Users::UserDetail
-          request_args = interactor.parameters({ id: @current_user.id })
+        params do
+          requires :email, type: String
+          requires :password, type: String
+        end
+        post :login do
+          interactor = UseCases::Authentication::UserGetToken
+          request_args = interactor.parameters(params)
           Dry::Matcher::ResultMatcher.call(interactor.new(request_args).result) do |matcher|
             matcher.success do |response|
               success_response(response)

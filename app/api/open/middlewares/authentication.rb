@@ -2,16 +2,17 @@ class Open::Middlewares::Authentication < Rack::Auth::AbstractHandler
   def call(env)
     auth = Request.new(env)
 
-    return custom_error(401, ['Authorization should be provided']) unless auth.provided?
+    unless env['REQUEST_PATH'].eql?('/api/open/doc')
+      return custom_error(401, ['Authorization should be provided']) unless auth.provided?
+      return custom_error(401, ['Unauthorized']) unless auth.bearer?
 
-    return custom_error(401, ['Unauthorized']) unless auth.bearer?
+      # challenge_token
+      status, message, owner = do_validate_token(auth.token)
+      return custom_error(401, [message]) unless status
 
-    # challenge_token
-    status, message, owner = do_validate_token(auth.token)
-    return custom_error(401, [message]) unless status
-
-    valid?(owner)
-    env['owner'] = owner
+      valid?(owner)
+      env['owner'] = owner
+    end
     status, headers, response = @app.call(env)
     [status, headers, response]
   end
