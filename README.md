@@ -15,9 +15,11 @@ Things you may want to cover:
   1. install ruby with version 3.1.0
   2. install postgress
   3. copy file env.example and rename to
+
     * development (.env.development)
     * test (.env.test)
   4. fill the env in according to your needs
+
     * DATABASE_NAME
     * DATABASE_USERNAME
     * DATABASE_PASSWORD
