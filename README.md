@@ -1,9 +1,8 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Readme how to setup this app.
 
-Things you may want to cover:
+Please follow steps bellow:
 
 ## Ruby version
   - 3.1.0
