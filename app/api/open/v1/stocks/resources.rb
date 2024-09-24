@@ -3,7 +3,7 @@
 module Open
   module V1
     module Stocks
-      # Resources api for users
+      # Resources api for Stocks
       class Resources < Open::V1::AplicationResources
         desc 'user list all stock' do
           detail 'List All Stock'

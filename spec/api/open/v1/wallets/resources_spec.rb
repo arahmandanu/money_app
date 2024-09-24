@@ -8,6 +8,7 @@ RSpec.describe Open::V1::Wallets::Resources, type: :request do
   before do
     actor
   end
+
   describe 'Open::V1::Wallets::Resources' do
     context 'valid params get wallet info' do
       it 'should return user wallet info with http code (200)' do
@@ -46,6 +47,18 @@ RSpec.describe Open::V1::Wallets::Resources, type: :request do
         expect(body).to eq({ 'status' => 'error',
                              'error' => { 'code' => 500, 'messages' => ['Your transaction is too much!! please do more deposit!'], 'errors' => true,
                                           'error_code' => '' } })
+      end
+    end
+
+    context 'valid params get histories' do
+      before do
+        create :wallet_transaction_log, owner: actor
+        create :withdraw_log, owner: actor
+        create :deposit_log, owner: actor
+      end
+      it 'should return user wallet info with http code (500)' do
+        post '/api/open/v1/wallets/my_histories', headers: { authorization: "bearer #{tokenizer.token}" }
+        expect(JSON.parse(response.body)['data']['wallet_transaction_logs'].size).to eq(3)
       end
     end
   end
