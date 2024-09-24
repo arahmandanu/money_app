@@ -15,16 +15,16 @@ Things you may want to cover:
   1. install ruby with version 3.1.0
   2. install postgress
   3. copy file env.example and rename to
-    - development (.env.development)
-    - test (.env.test)
+    * development (.env.development)
+    * test (.env.test)
   4. fill the env in according to your needs
-    - DATABASE_NAME
-    - DATABASE_USERNAME
-    - DATABASE_PASSWORD
-    - DATABASE_HOSTNAME
-    - RAPID_API_STOCK_URL (get from your rapid api .com)
-    - RAPID_API_HOST (get from your rapidapi.com > x-rapidapi-host)
-    - RAPID_API_KEY (get from your rapidapi.com > x-rapidapi-key)
+    * DATABASE_NAME
+    * DATABASE_USERNAME
+    * DATABASE_PASSWORD
+    * DATABASE_HOSTNAME
+    * RAPID_API_STOCK_URL (get from your rapid api .com)
+    * RAPID_API_HOST (get from your rapidapi.com > x-rapidapi-host)
+    * RAPID_API_KEY (get from your rapidapi.com > x-rapidapi-key)
 
 ## Database creation
   * for development
