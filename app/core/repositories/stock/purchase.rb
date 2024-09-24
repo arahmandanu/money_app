@@ -22,11 +22,19 @@ class Repositories::Stock::Purchase < Repositories::AbstractRepository
     return Failure('Purchase cannot be made, exceeding wallet!') if divided_money <= 0
 
     wallet.total = divided_money.to_f
-    if wallet.save
-      # DO SAVE PURCHASING LOG HERE
-      success stock
-    else
-      failure wallet.errors
+    Wallet.transaction do
+      if wallet.save
+        # DO SAVE PURCHASING LOG HERE
+        Services::Stocks::PurchaseTransactionLog.new(params: {
+                                                       owner_id: @user.id,
+                                                       owner_type: @user.class,
+                                                       total_purchase_item: @params.total_purchase,
+                                                       product: stock
+                                                     }).call
+        success stock
+      else
+        failure wallet.errors
+      end
     end
   end
 

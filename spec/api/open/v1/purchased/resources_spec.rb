@@ -52,6 +52,7 @@ RSpec.describe Open::V1::Purchased::Resources, type: :request do
         wallet = actor.reload.wallet.total
         expect(ActionController::Base.helpers.number_to_currency(wallet, unit: '', separator: '.',
                                                                          delimiter: '')).to eq(JSON.parse(response.body)['data']['user']['wallet'])
+        expect(PurchasedStockLog.count).to eq(1)
       end
     end
 
