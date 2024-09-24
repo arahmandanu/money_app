@@ -14,5 +14,17 @@ RSpec.describe Open::V1::Users::Resources, type: :request do
         expect(response).to have_http_status(200)
       end
     end
+
+    context 'when token is expired' do
+      let(:actor) { create :user }
+      let(:tokenizer) { create :tokenizer, resource_owner_id: actor.auth.id, created_at: (Time.now - 2.days) }
+      before do
+        actor
+      end
+      it 'should return 401' do
+        get '/api/open/v1/users', headers: { authorization: "bearer #{tokenizer.token}" }
+        expect(response).to have_http_status(401)
+      end
+    end
   end
 end

@@ -24,6 +24,11 @@ class Open::Middlewares::Authentication < Rack::Auth::AbstractHandler
     return [false, 'Unauthorized', nil] if record_token.blank?
     return [false, 'Token Revoked !'] if record_token.revoked_at.present?
 
+    if record_token.created_at.to_i + record_token.expires_in <= Time.now.to_i
+      Repositories::Tokenizers::Revoke.new(record_token).call
+      return [false, 'Token Revoked!']
+    end
+
     [true, nil, record_token.auth.auth_able]
   end
 

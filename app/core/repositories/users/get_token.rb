@@ -27,7 +27,7 @@ class Repositories::Users::GetToken < Repositories::AbstractRepository
   def create_new_token(user)
     params = {
       token: Digest::SHA1.hexdigest([Time.now, rand].join),
-      expires_in: Time.now + 1.days
+      expires_in: 1.days.to_i
     }
     user.auth.tokenizers.create(params)
   end
