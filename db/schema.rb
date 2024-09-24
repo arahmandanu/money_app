@@ -42,7 +42,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_24_054205) do
   create_table "wallet_transaction_logs", force: :cascade do |t|
     t.integer "owner_id"
     t.string "owner_type"
-    t.integer "total"
+    t.decimal "total", precision: 30, scale: 10
     t.string "type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -51,7 +51,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_24_054205) do
   create_table "wallets", force: :cascade do |t|
     t.integer "owner_id"
     t.string "owner_type"
-    t.integer "total"
+    t.decimal "total", precision: 30, scale: 10
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

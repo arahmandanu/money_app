@@ -13,14 +13,13 @@ class Builders::Wallets::WalletInfo < Builders::AbstractBuilder
   private
 
   def get_total_wallet(user)
-    if user.wallet.blank?
-      {
-        wallet: '0'
-      }
-    else
-      {
-        wallet: user.wallet.total.to_s
-      }
-    end
+    wallet = if user.wallet.blank?
+               0
+             else
+               user.wallet.total.to_s
+             end
+
+    { wallet: ActionController::Base.helpers.number_to_currency(wallet, unit: '', separator: '.',
+                                                                        delimiter: '') }
   end
 end

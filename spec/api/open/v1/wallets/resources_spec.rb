@@ -23,7 +23,7 @@ RSpec.describe Open::V1::Wallets::Resources, type: :request do
              headers: { authorization: "bearer #{tokenizer.token}" }, params: { transaction_type: 'deposit', total_money: 500_000 }
         expect(response).to have_http_status(201)
         body = ActiveSupport::HashWithIndifferentAccess.new(JSON(response.body))
-        expect(body[:data]['wallet']).to eq('1500000')
+        expect(body[:data]['wallet']).to eq('1500000.00')
         expect(DepositWalletLog.count).to eq(1)
       end
     end
@@ -34,7 +34,7 @@ RSpec.describe Open::V1::Wallets::Resources, type: :request do
              headers: { authorization: "bearer #{tokenizer.token}" }, params: { transaction_type: 'withdraw', total_money: 500_000 }
         expect(response).to have_http_status(201)
         body = ActiveSupport::HashWithIndifferentAccess.new(JSON(response.body))
-        expect(body[:data]['wallet']).to eq('500000')
+        expect(body[:data]['wallet']).to eq('500000.00')
       end
     end
 

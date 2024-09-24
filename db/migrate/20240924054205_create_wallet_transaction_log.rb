@@ -3,7 +3,7 @@ class CreateWalletTransactionLog < ActiveRecord::Migration[7.1]
     create_table :wallet_transaction_logs do |t|
       t.integer 'owner_id'
       t.string 'owner_type'
-      t.integer 'total'
+      t.decimal 'total', precision: 30, scale: 10
       t.string 'type', null: false
       t.timestamps
     end
