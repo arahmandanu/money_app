@@ -27,11 +27,11 @@ Things you may want to cover:
     - RAPID_API_KEY (get from your rapidapi.com > x-rapidapi-key)
 
 ## Database creation
-  1. for development
+  *1*. for development
     - rake db:create
     - rake db:migrate
     - rake seed:migrate
-  2. for test
+  *2*. for test
     - RAILS_ENV=test rails db:create
     - RAILS_ENV=test rails db:migrate
 
