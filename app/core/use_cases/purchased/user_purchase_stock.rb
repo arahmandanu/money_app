@@ -19,7 +19,7 @@ module UseCases
       def result
         valid_params = yield result_of_validating_params
         user = yield Repositories::Users::FindBy.new({ id: valid_params[:id] }).call
-        yield Repositories::Stock::PurchaseStock.new(valid_params, user:).call
+        yield Repositories::Stock::Purchase.new(valid_params, user:).call
 
         Success({ message: 'success purchase stock', user: Builders::Wallets::WalletInfo.new(user).build })
       end

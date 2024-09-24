@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Repositories::Stock::PurchaseStock < Repositories::AbstractRepository
+class Repositories::Stock::Purchase < Repositories::AbstractRepository
   include Dry::Monads::Do.for(:call)
   def initialize(params, user: nil)
     @params = Hashie::Mash.new(params)
@@ -36,7 +36,10 @@ class Repositories::Stock::PurchaseStock < Repositories::AbstractRepository
     stock = Services::Stocks.new.get_by_identifier(params[:identifier])
     return Failure('Stock Not Found') if stock.blank?
 
-    Success Hashie::Mash.new(stock[0])
+    stock = Hashie::Mash.new(stock[0])
+    return failure 'Stock Not Found' if params[:identifier] != stock.identifier
+
+    Success stock
   rescue StandardError
     Failure 'Failed to retrive stock'
   end

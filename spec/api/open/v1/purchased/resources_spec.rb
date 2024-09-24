@@ -8,7 +8,9 @@ RSpec.describe Open::V1::Purchased::Resources, type: :request do
   before do
     actor
   end
-
+  let(:random_stock) do
+    []
+  end
   let(:singgle_stock) do
     [
       {
@@ -50,6 +52,45 @@ RSpec.describe Open::V1::Purchased::Resources, type: :request do
         wallet = actor.reload.wallet.total
         expect(ActionController::Base.helpers.number_to_currency(wallet, unit: '', separator: '.',
                                                                          delimiter: '')).to eq(JSON.parse(response.body)['data']['user']['wallet'])
+      end
+    end
+
+    context 'when the price is higher than wallet' do
+      before do
+        singgle_stock_stubber(response: singgle_stock, identier: 'NIFTY 50')
+      end
+
+      it 'should return error' do
+        post '/api/open/v1/purchased/stock', headers: { authorization: "bearer #{tokenizer.token}" },
+                                             params: { identifier: 'NIFTY 50', total_purchase: 1000 }
+        expect(response).to have_http_status(500)
+        expect(JSON.parse(response.body)['error']['messages']).to eq(['Purchase cannot be made, exceeding wallet!'])
+      end
+    end
+
+    context 'when user type random identifier' do
+      before do
+        singgle_stock_stubber(response: random_stock, identier: 'random_product_type')
+      end
+
+      it 'should return error' do
+        post '/api/open/v1/purchased/stock', headers: { authorization: "bearer #{tokenizer.token}" },
+                                             params: { identifier: 'random_product_type', total_purchase: 1000 }
+        expect(response).to have_http_status(500)
+        expect(JSON.parse(response.body)['error']['messages']).to eq(['Stock Not Found'])
+      end
+    end
+
+    context 'when have different identifier' do
+      before do
+        singgle_stock_stubber(response: singgle_stock, identier: 'random_product_type')
+      end
+
+      it 'should return error' do
+        post '/api/open/v1/purchased/stock', headers: { authorization: "bearer #{tokenizer.token}" },
+                                             params: { identifier: 'random_product_type', total_purchase: 1000 }
+        expect(response).to have_http_status(500)
+        expect(JSON.parse(response.body)['error']['messages']).to eq(['Stock Not Found'])
       end
     end
   end
