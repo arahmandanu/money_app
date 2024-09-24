@@ -14,7 +14,10 @@ class Repositories::Wallets::Deposit < Repositories::AbstractRepository
     wallet.total = current_total + @params.total_money
 
     if wallet.save
-      # Do save Log HERE
+      Services::Wallets::TransactionLog.new(
+        params: { owner_id: @user.id, owner_type: @user.class,
+                  total: @params.total_money }, transaction_type: DepositWalletLog
+      ).call
       success @user.reload
     else
       failure wallet.errors

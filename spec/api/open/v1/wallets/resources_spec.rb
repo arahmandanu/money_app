@@ -23,6 +23,7 @@ RSpec.describe Open::V1::Wallets::Resources, type: :request do
         expect(response).to have_http_status(201)
         body = ActiveSupport::HashWithIndifferentAccess.new(JSON(response.body))
         expect(body[:data]['wallet']).to eq('1500000')
+        expect(DepositWalletLog.count).to eq(1)
       end
     end
 
@@ -33,6 +34,18 @@ RSpec.describe Open::V1::Wallets::Resources, type: :request do
         expect(response).to have_http_status(201)
         body = ActiveSupport::HashWithIndifferentAccess.new(JSON(response.body))
         expect(body[:data]['wallet']).to eq('500000')
+      end
+    end
+
+    context 'valid params but total requested is higher when user withdraw wallet' do
+      it 'should return user wallet info with http code (500)' do
+        post '/api/open/v1/wallets/action',
+             headers: { authorization: "bearer #{tokenizer.token}" }, params: { transaction_type: 'withdraw', total_money: 1_500_000 }
+        expect(response).to have_http_status(500)
+        body = ActiveSupport::HashWithIndifferentAccess.new(JSON(response.body))
+        expect(body).to eq({ 'status' => 'error',
+                             'error' => { 'code' => 500, 'messages' => ['Your transaction is too much!! please do more deposit!'], 'errors' => true,
+                                          'error_code' => '' } })
       end
     end
   end

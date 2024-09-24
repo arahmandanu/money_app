@@ -14,7 +14,10 @@ class Repositories::Wallets::Withdraw < Repositories::AbstractRepository
     current_total = wallet.total
     wallet.total = current_total - @params.total_money
     if wallet.save
-      # Do save Log HERE
+      Services::Wallets::TransactionLog.new(
+        params: { owner_id: @user.id, owner_type: @user.class,
+                  total: @params.total_money }, transaction_type: WithdrawWalletLog
+      ).call
       success @user.reload
     else
       failure wallet.errors
