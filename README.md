@@ -6,10 +6,10 @@ application up and running.
 Things you may want to cover:
 
 * Ruby version
-- 3.1.0
+  - 3.1.0
 
 * System dependencies
-- Postgres
+  - Postgres
 
 * Configuration
   1. install ruby with version 3.1.0
@@ -47,8 +47,8 @@ Things you may want to cover:
 
 * Testing using Development env
   there is initial user you can use
-  email => initial_user@mail.com
-  password => 123456789
+  - email => initial_user@mail.com
+  - password => 123456789
 
   1. run in console "rake assets:precompile" to generate all asset
   2. run 'rails s'
