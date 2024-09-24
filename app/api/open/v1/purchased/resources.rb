@@ -11,9 +11,13 @@ module Open
             headers AUTHORIZATION_HEADERS
             tags ['stocks']
           end
-          get do
-            interactor = UseCases::Stocks::UserListAll
-            request_args = interactor.parameters({ id: @current_user.id })
+          params do
+            requires :identifier, type: String
+            requires :total_purchase, type: Integer
+          end
+          post do
+            interactor = UseCases::Purchased::UserPurchaseStock
+            request_args = interactor.parameters(params.merge({ id: @current_user.id }))
             Dry::Matcher::ResultMatcher.call(interactor.new(request_args).result) do |matcher|
               matcher.success do |response|
                 success_response(response)

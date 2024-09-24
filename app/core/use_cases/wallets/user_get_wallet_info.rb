@@ -14,7 +14,7 @@ module UseCases
 
       def result
         valid_params = yield result_of_validating_params
-        user = yield Repositories::Wallets::GetInfo.new(id: valid_params[:id]).call
+        user = yield Repositories::Users::FindBy.new(id: valid_params[:id]).call
         Success(Builders::Wallets::WalletInfo.new(user).build)
       end
     end
