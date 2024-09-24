@@ -25,5 +25,15 @@ RSpec.describe Open::V1::Wallets::Resources, type: :request do
         expect(body[:data]['wallet']).to eq('1500000')
       end
     end
+
+    context 'valid params user withdraw wallet' do
+      it 'should return user wallet info with http code (200)' do
+        post '/api/open/v1/wallets/action',
+             headers: { authorization: "bearer #{tokenizer.token}" }, params: { transaction_type: 'withdraw', total_money: 500_000 }
+        expect(response).to have_http_status(201)
+        body = ActiveSupport::HashWithIndifferentAccess.new(JSON(response.body))
+        expect(body[:data]['wallet']).to eq('500000')
+      end
+    end
   end
 end

@@ -17,7 +17,7 @@ class Repositories::Wallets::Deposit < Repositories::AbstractRepository
       # Do save Log HERE
       success @user.reload
     else
-      failure wallet.error_message
+      failure wallet.errors
     end
   end
 end
