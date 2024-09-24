@@ -7,5 +7,8 @@ FactoryBot.define do
     after :create do |object|
       create :auth, auth_able_type: object.class.name, auth_able_id: object.id
     end
+    after :create do |object|
+      create :wallet, owner_type: object.class.name, owner_id: object.id
+    end
   end
 end

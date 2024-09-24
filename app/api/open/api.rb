@@ -19,6 +19,7 @@ module Open
     helpers Open::Helpers::ErrorHandlerHelpers
 
     mount Open::V1::Users::Resources => '/v1/users'
+    mount Open::V1::Wallets::Resources => '/v1/wallets'
 
     add_swagger_documentation \
       api_version: 'v1',

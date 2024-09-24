@@ -10,7 +10,7 @@ module Open
           headers AUTHORIZATION_HEADERS
           tags ['users']
         end
-        get '' do
+        get do
           interactor = UseCases::Users::UserDetail
           request_args = interactor.parameters({ id: @current_user.id })
           Dry::Matcher::ResultMatcher.call(interactor.new(request_args).result) do |matcher|

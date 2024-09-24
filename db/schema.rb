@@ -10,32 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 20_240_923_134_751) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_24_032759) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension 'plpgsql'
+  enable_extension "plpgsql"
 
-  create_table 'auths', force: :cascade do |t|
-    t.integer 'auth_able_id'
-    t.string 'auth_able_type'
-    t.string 'encrypted_password', default: '', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
+  create_table "auths", force: :cascade do |t|
+    t.integer "auth_able_id"
+    t.string "auth_able_type"
+    t.string "encrypted_password", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table 'tokenizers', force: :cascade do |t|
-    t.integer 'resource_owner_id', null: false
-    t.string 'token', null: false
-    t.integer 'expires_in', null: false
-    t.datetime 'revoked_at'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
+  create_table "tokenizers", force: :cascade do |t|
+    t.integer "resource_owner_id", null: false
+    t.string "token", null: false
+    t.integer "expires_in", null: false
+    t.datetime "revoked_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table 'users', force: :cascade do |t|
-    t.string 'name'
-    t.string 'email', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['email'], name: 'unq_email', unique: true
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "email", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "unq_email", unique: true
   end
+
+  create_table "wallets", force: :cascade do |t|
+    t.integer "owner_id"
+    t.string "owner_type"
+    t.integer "total"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
 end
