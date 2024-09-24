@@ -20,6 +20,7 @@ module Open
 
     mount Open::V1::Users::Resources => '/v1/users'
     mount Open::V1::Wallets::Resources => '/v1/wallets'
+    mount Open::V1::Stocks::Resources => '/v1/stocks'
 
     add_swagger_documentation \
       api_version: 'v1',
