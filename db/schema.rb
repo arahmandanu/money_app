@@ -25,6 +25,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_24_102750) do
   create_table "purchased_stock_logs", force: :cascade do |t|
     t.integer "owner_id"
     t.string "owner_type"
+    t.string "identifier", null: false
     t.integer "total_purchase_item"
     t.jsonb "product", default: {}
     t.datetime "created_at", null: false

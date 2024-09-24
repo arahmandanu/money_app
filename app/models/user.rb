@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :deposit_log, class_name: 'DepositWalletLog', foreign_key: 'owner_id', dependent: :destroy
   has_many :withdraw_log, class_name: 'WithdrawWalletLog', foreign_key: 'owner_id', dependent: :destroy
   has_many :wallet_transaction_logs, class_name: 'WalletTransactionLog', foreign_key: 'owner_id', dependent: :destroy
+  has_many :purchased_stock_logs, class_name: 'PurchasedStockLog', foreign_key: 'owner_id', dependent: :destroy
 
   private
 

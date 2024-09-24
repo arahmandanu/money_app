@@ -28,6 +28,7 @@ class Repositories::Stock::Purchase < Repositories::AbstractRepository
         Services::Stocks::PurchaseTransactionLog.new(params: {
                                                        owner_id: @user.id,
                                                        owner_type: @user.class,
+                                                       identifier: @params.identifier,
                                                        total_purchase_item: @params.total_purchase,
                                                        product: stock
                                                      }).call
