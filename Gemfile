@@ -102,3 +102,5 @@ gem 'clean-architecture', '~> 5.0.2'
 gem 'dry-rails'
 #  grape hashie formater
 gem 'hashie-forbidden_attributes'
+# gem seeder
+gem 'seed_migration'

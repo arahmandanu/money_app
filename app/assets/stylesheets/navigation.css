@@ -13,48 +13,12 @@
     border: 1px solid transparent;
 }
 
-.swagger-section .nav-api a.btn.apel {
-    background-color: #C0392B;
-    color: white;
-}
-
-.swagger-section .nav-api a.btn.jeruk {
-    background-color: #049372;
-    color: white;
-}
-
-.swagger-section .nav-api a.btn.mangga {
-    background-color: #EB9532;
-    color: white;
-}
-
-.swagger-section .nav-api a.btn.melon {
-    background-color: #89bf04;
-    color: white;
-}
-
-.swagger-section .nav-api a.btn.pisang {
-    background-color: #bfb604;
-    color: white;
-}
-
-.swagger-section .nav-api a.btn.terong {
+.swagger-section .nav-api a.btn.purple {
     background-color: #892de3;
     color: white;
 }
 
-.swagger-section .nav-api a.btn.rambutan {
+.swagger-section .nav-api a.btn.blue {
     background-color: #04a3bf;
     color: white;
-}
-
-.swagger-section .nav-api a.btn.stroberi {
-    background-color: #fc5a8d;
-    color: white;
-}
-
-.swagger-section .nav-api a.btn:hover {
-    background-color: #ffffff;
-    color: #c516f6;
-    border: 1px solid #c516f6;
 }

@@ -4,7 +4,6 @@ class Open::Middlewares::Authentication < Rack::Auth::AbstractHandler
 
     unless env['REQUEST_PATH'].eql?('/api/open/doc')
       return custom_error(401, ['Authorization should be provided']) unless auth.provided?
-      return custom_error(401, ['Unauthorized']) unless auth.bearer?
 
       # challenge_token
       status, message, owner = do_validate_token(auth.token)

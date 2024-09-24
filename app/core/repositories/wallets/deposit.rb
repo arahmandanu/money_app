@@ -8,8 +8,7 @@ class Repositories::Wallets::Deposit < Repositories::AbstractRepository
 
   def call
     wallet = @user.wallet
-    return failure('Wallet is empty!') unless wallet
-
+    wallet ||= @user.create_wallet(total: 0)
     current_total = wallet.total
     wallet.total = current_total + @params.total_money
 

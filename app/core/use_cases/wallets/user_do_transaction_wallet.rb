@@ -22,7 +22,7 @@ module UseCases
       def result
         valid_params = yield result_of_validating_params
         user = yield Repositories::Users::FindBy.new({ id: valid_params[:id] }).call
-        yield get_user_wallet(user)
+        yield get_user_wallet(user, valid_params[:transaction_type])
         if valid_params[:transaction_type].eql?('deposit')
           yield Repositories::Wallets::Deposit.new(params: valid_params, user:).call
         else
@@ -34,9 +34,11 @@ module UseCases
 
       private
 
-      def get_user_wallet(user)
+      def get_user_wallet(user, transaction_type)
         wallet = user.wallet
-        return Failure 'Wallet is empty!' if wallet.blank? || wallet.total.to_i.eql?(0)
+        if transaction_type.eql?('withdraw') && (wallet.blank? || wallet.total.to_i.eql?(0))
+          return Failure 'Wallet is empty!'
+        end
 
         Success wallet
       end
