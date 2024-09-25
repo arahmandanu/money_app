@@ -10,6 +10,7 @@ module Open
           headers AUTHORIZATION_HEADERS
           tags ['wallets']
         end
+        oauth2 :adrian
         get :my_info do
           interactor = UseCases::Wallets::UserGetWalletInfo
           request_args = interactor.parameters({ id: @current_user.id })

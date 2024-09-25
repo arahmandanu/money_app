@@ -4,7 +4,7 @@ require 'grape-swagger'
 module Open
   class API < Grape::API
     include Open::Errors::ExceptionHandler
-
+    use MyAuthentication::Extension
     Grape::Middleware::Auth::Strategies.add(:api_auth, Open::Middlewares::Authentication, lambda { |options|
       [options[:realm]]
     })
