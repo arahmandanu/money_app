@@ -8,7 +8,7 @@ module Authentication
         if errors.is_a? CleanArchitecture::UseCases::Errors
           raise Open::Errors::Exception.new(message: [errors.message], code: 400,
                                             errors: errors.as_json['active_model_errors'])
-        elsif errors.is_a? String
+        elsif [Symbol, String].include? errors.class
           raise Open::Errors::Exception.new(message: errors, code: 400,
                                             errors: true)
         else
